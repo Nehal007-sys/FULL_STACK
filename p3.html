@@ -1,287 +1,855 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Student Result</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+
+        * {
+            box-sizing: border-box;
         }
 
-        .container {
-            width: 400px;
-            margin: 50px auto;
-            padding: 25px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px gray;
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            padding: 30px 15px;
         }
+
+
+        /* Main Container */
+
+        .container {
+            width: 450px;
+            max-width: 100%;
+
+            padding: 30px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0px 20px 50px rgba(0, 0, 0, 0.25);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* Heading */
 
         h2 {
             text-align: center;
-            color: #333;
+
+            margin-top: 0;
             margin-bottom: 25px;
+
+            font-size: 30px;
+
+            color: #333;
         }
+
+
+        h2::after {
+            content: "";
+
+            display: block;
+
+            width: 70px;
+            height: 4px;
+
+            margin: 10px auto 0;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                90deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+
+        /* Labels */
 
         label {
             display: block;
-            margin-top: 12px;
+
+            margin-top: 15px;
+            margin-bottom: 6px;
+
             font-weight: bold;
+
+            color: #444;
         }
+
+
+        /* Input */
 
         input {
-            width: 95%;
-            padding: 9px;
-            margin-top: 5px;
-            border: 1px solid gray;
-            border-radius: 5px;
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 2px solid #ddd;
+
+            border-radius: 10px;
+
             font-size: 15px;
+
+            background-color: #fafafa;
+
+            transition: 0.3s;
         }
+
+
+        input:hover {
+            border-color: #999;
+        }
+
 
         input:focus {
-            border-color: #007bff;
+            border-color: #667eea;
+
+            background-color: white;
+
             outline: none;
+
+            box-shadow:
+                0 0 0 3px rgba(102, 126, 234, 0.15);
         }
 
-        /* Buttons */
+
+        /* Subject Section */
+
+        .subject-title {
+            margin-top: 25px;
+
+            padding: 10px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: white;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+
+        /* Button Group */
+
         .button-group {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+
+            gap: 12px;
+
+            margin-top: 25px;
         }
+
+
+        /* Buttons */
 
         button {
             flex: 1;
-            padding: 10px;
-            color: white;
+
+            padding: 13px;
+
             border: none;
-            border-radius: 5px;
+
+            border-radius: 10px;
+
+            color: white;
+
             font-size: 16px;
+
+            font-weight: bold;
+
             cursor: pointer;
+
+            transition: 0.3s;
         }
+
 
         .calculate {
-            background-color: #007bff;
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
         }
+
 
         .calculate:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0px 8px 18px rgba(102, 126, 234, 0.4);
         }
+
 
         .clear {
-            background-color: #dc3545;
+            background: linear-gradient(
+                135deg,
+                #ff416c,
+                #ff4b2b
+            );
         }
+
 
         .clear:hover {
-            background-color: #b02a37;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0px 8px 18px rgba(255, 65, 108, 0.4);
         }
 
+
         /* Result Box */
+
         #result {
+            display: none;
+
             margin-top: 25px;
-            padding: 20px;
-            background-color: #eaf4ff;
-            border: 2px solid #007bff;
-            border-radius: 10px;
-            line-height: 1.8;
+
+            padding: 22px;
+
+            background: #f8f9ff;
+
+            border-radius: 15px;
+
+            border: 2px solid #667eea;
+
+            line-height: 1.9;
+
+            animation: showResult 0.5s ease;
         }
+
+
+        @keyframes showResult {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* Result Title */
 
         .result-title {
             text-align: center;
-            color: #007bff;
-            margin-bottom: 10px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #667eea;
+
+            margin-bottom: 15px;
         }
+
+
+        /* Student Information */
+
+        .student-info {
+            padding: 12px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            background: white;
+
+            border-left: 5px solid #667eea;
+        }
+
+
+        /* Subject Result */
+
+        .subject-result {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 8px 10px;
+
+            margin: 6px 0;
+
+            background: white;
+
+            border-radius: 8px;
+
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+
+        /* Pass */
 
         .pass {
-            color: green;
+            color: #198754;
+
             font-weight: bold;
+
+            background: #d1e7dd;
+
+            padding: 3px 9px;
+
+            border-radius: 20px;
         }
+
+
+        /* Fail */
 
         .fail {
-            color: red;
+            color: #dc3545;
+
             font-weight: bold;
+
+            background: #f8d7da;
+
+            padding: 3px 9px;
+
+            border-radius: 20px;
         }
 
-        .overall {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #aaa;
-            font-size: 18px;
+
+        /* Percentage */
+
+        .percentage {
+            display: block;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            text-align: center;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            color: #667eea;
+
+            background: white;
+
+            border-radius: 10px;
         }
+
+
+        /* Overall */
+
+        .overall {
+            margin-top: 15px;
+
+            padding: 14px;
+
+            text-align: center;
+
+            border-top: 2px solid #ddd;
+
+            font-size: 19px;
+        }
+
+
+        /* Responsive */
+
+        @media(max-width: 500px) {
+
+            .container {
+                padding: 22px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <div class="container">
 
-        <h2>Student Result</h2>
+<div class="container">
 
-        <label>Subject 1 Marks</label>
-        <input type="number" id="sub1" min="0" max="100">
+    <h2>🎓 Student Result</h2>
 
-        <label>Subject 2 Marks</label>
-        <input type="number" id="sub2" min="0" max="100">
 
-        <label>Subject 3 Marks</label>
-        <input type="number" id="sub3" min="0" max="100">
+    <!-- Student Information -->
 
-        <label>Subject 4 Marks</label>
-        <input type="number" id="sub4" min="0" max="100">
+    <label>Student Name</label>
 
-        <label>Subject 5 Marks</label>
-        <input type="number" id="sub5" min="0" max="100">
+    <input
+        type="text"
+        id="studentName"
+        placeholder="Enter Student Name"
+    >
 
-        <div class="button-group">
 
-            <button class="calculate" onclick="calculateResult()">
-                Calculate Result
-            </button>
+    <label>Enrollment Number</label>
 
-            <button class="clear" onclick="clearResult()">
-                Clear
-            </button>
+    <input
+        type="text"
+        id="enrollment"
+        placeholder="Enter Enrollment Number"
+    >
 
-        </div>
 
-        <div id="result"></div>
+    <label>Course</label>
+
+    <input
+        type="text"
+        id="Course"
+        placeholder="Enter Course Name"
+    >
+
+
+    <!-- Subject Section -->
+
+    <div class="subject-title">
+        📚 Subject Marks
+    </div>
+
+
+    <label>Subject 1 Marks</label>
+
+    <input
+        type="number"
+        id="sub1"
+        min="0"
+        max="100"
+        placeholder="Enter marks out of 100"
+    >
+
+
+    <label>Subject 2 Marks</label>
+
+    <input
+        type="number"
+        id="sub2"
+        min="0"
+        max="100"
+        placeholder="Enter marks out of 100"
+    >
+
+
+    <label>Subject 3 Marks</label>
+
+    <input
+        type="number"
+        id="sub3"
+        min="0"
+        max="100"
+        placeholder="Enter marks out of 100"
+    >
+
+
+    <label>Subject 4 Marks</label>
+
+    <input
+        type="number"
+        id="sub4"
+        min="0"
+        max="100"
+        placeholder="Enter marks out of 100"
+    >
+
+
+    <label>Subject 5 Marks</label>
+
+    <input
+        type="number"
+        id="sub5"
+        min="0"
+        max="100"
+        placeholder="Enter marks out of 100"
+    >
+
+
+    <!-- Buttons -->
+
+    <div class="button-group">
+
+        <button
+            class="calculate"
+            onclick="calculateResult()"
+        >
+            Calculate Result
+        </button>
+
+
+        <button
+            class="clear"
+            onclick="clearResult()"
+        >
+            Clear
+        </button>
 
     </div>
 
 
-    <script>
+    <!-- Result -->
 
-        // Calculate Result
-        function calculateResult() {
+    <div id="result"></div>
 
-            let m1 = Number(document.getElementById("sub1").value);
-            let m2 = Number(document.getElementById("sub2").value);
-            let m3 = Number(document.getElementById("sub3").value);
-            let m4 = Number(document.getElementById("sub4").value);
-            let m5 = Number(document.getElementById("sub5").value);
+</div>
 
 
-            // Total
-            let total = m1 + m2 + m3 + m4 + m5;
+
+<script>
 
 
-            // Percentage
-            let percentage = (total / 500) * 100;
+function calculateResult() {
 
 
-            // Subject-wise Pass / Fail
-            let s1 = m1 >= 40
-                ? '<span class="pass">Pass</span>'
-                : '<span class="fail">Fail</span>';
+    // Student Information
 
-            let s2 = m2 >= 40
-                ? '<span class="pass">Pass</span>'
-                : '<span class="fail">Fail</span>';
-
-            let s3 = m3 >= 40
-                ? '<span class="pass">Pass</span>'
-                : '<span class="fail">Fail</span>';
-
-            let s4 = m4 >= 40
-                ? '<span class="pass">Pass</span>'
-                : '<span class="fail">Fail</span>';
-
-            let s5 = m5 >= 40
-                ? '<span class="pass">Pass</span>'
-                : '<span class="fail">Fail</span>';
+    let studentName =
+        document.getElementById("studentName").value.trim();
 
 
-            // Overall Result
-            let overallResult;
-
-            if (
-                m1 >= 40 &&
-                m2 >= 40 &&
-                m3 >= 40 &&
-                m4 >= 40 &&
-                m5 >= 40
-            ) {
-
-                overallResult =
-                    '<span class="pass">Pass</span>';
-
-            } else {
-
-                overallResult =
-                    '<span class="fail">Fail</span>';
-            }
+    let enrollment =
+        document.getElementById("enrollment").value.trim();
 
 
-            // Grade
-            let grade;
-
-            if (percentage >= 90) {
-                grade = "A+";
-            }
-            else if (percentage >= 80) {
-                grade = "A";
-            }
-            else if (percentage >= 70) {
-                grade = "B+";
-            }
-            else if (percentage >= 60) {
-                grade = "B";
-            }
-            else if (percentage >= 50) {
-                grade = "C";
-            }
-            else if (percentage >= 40) {
-                grade = "D";
-            }
-            else {
-                grade = "F";
-            }
+    let Course =
+        document.getElementById("Course").value.trim();
 
 
-            // Display Result
-            document.getElementById("result").innerHTML =
 
-                '<div class="result-title"><b>RESULT</b></div>' +
+    // Validation
 
-                "<b>Subject 1:</b> " + m1 + " - " + s1 + "<br>" +
+    if (
+        studentName == "" ||
+        enrollment == "" ||
+        Course == ""
+    ) {
 
-                "<b>Subject 2:</b> " + m2 + " - " + s2 + "<br>" +
+        alert(
+            "Please enter Student Name, Enrollment Number and Course"
+        );
 
-                "<b>Subject 3:</b> " + m3 + " - " + s3 + "<br>" +
-
-                "<b>Subject 4:</b> " + m4 + " - " + s4 + "<br>" +
-
-                "<b>Subject 5:</b> " + m5 + " - " + s5 + "<br><br>" +
-
-                "<b>Total Marks:</b> " + total + " / 500<br>" +
-
-                "<b>Percentage:</b> " +
-                percentage.toFixed(2) + "%<br>" +
-
-                "<b>Grade:</b> " + grade +
-
-                '<div class="overall">' +
-                "<b>Overall Result:</b> " +
-                overallResult +
-                "</div>";
-        }
+        return;
+    }
 
 
-        // Clear Marks & Result
-        function clearResult() {
 
-            document.getElementById("sub1").value = "";
-            document.getElementById("sub2").value = "";
-            document.getElementById("sub3").value = "";
-            document.getElementById("sub4").value = "";
-            document.getElementById("sub5").value = "";
+    // Marks
 
-            document.getElementById("result").innerHTML = "";
+    let m1 =
+        Number(document.getElementById("sub1").value);
 
-        }
+    let m2 =
+        Number(document.getElementById("sub2").value);
 
-    </script>
+    let m3 =
+        Number(document.getElementById("sub3").value);
+
+    let m4 =
+        Number(document.getElementById("sub4").value);
+
+    let m5 =
+        Number(document.getElementById("sub5").value);
+
+
+
+    // Marks Validation
+
+    if (
+        m1 > 100 ||
+        m2 > 100 ||
+        m3 > 100 ||
+        m4 > 100 ||
+        m5 > 100
+    ) {
+
+        alert("Marks must be between 0 and 100");
+
+        return;
+    }
+
+
+
+    // Total
+
+    let total =
+        m1 + m2 + m3 + m4 + m5;
+
+
+
+    // Percentage
+
+    let percentage =
+        (total / 500) * 100;
+
+
+
+    // Subject Pass / Fail
+
+    let s1 =
+        m1 >= 40
+        ? '<span class="pass">Pass</span>'
+        : '<span class="fail">Fail</span>';
+
+
+    let s2 =
+        m2 >= 40
+        ? '<span class="pass">Pass</span>'
+        : '<span class="fail">Fail</span>';
+
+
+    let s3 =
+        m3 >= 40
+        ? '<span class="pass">Pass</span>'
+        : '<span class="fail">Fail</span>';
+
+
+    let s4 =
+        m4 >= 40
+        ? '<span class="pass">Pass</span>'
+        : '<span class="fail">Fail</span>';
+
+
+    let s5 =
+        m5 >= 40
+        ? '<span class="pass">Pass</span>'
+        : '<span class="fail">Fail</span>';
+
+
+
+    // Overall Result
+
+    let overallResult;
+
+
+    if (
+        m1 >= 40 &&
+        m2 >= 40 &&
+        m3 >= 40 &&
+        m4 >= 40 &&
+        m5 >= 40
+    ) {
+
+        overallResult =
+            '<span class="pass">PASS</span>';
+
+    }
+
+    else {
+
+        overallResult =
+            '<span class="fail">FAIL</span>';
+    }
+
+
+
+    // Grade
+
+    let grade;
+
+
+    if (percentage >= 90) {
+
+        grade = "A+";
+
+    }
+
+    else if (percentage >= 80) {
+
+        grade = "A";
+
+    }
+
+    else if (percentage >= 70) {
+
+        grade = "B+";
+
+    }
+
+    else if (percentage >= 60) {
+
+        grade = "B";
+
+    }
+
+    else if (percentage >= 50) {
+
+        grade = "C";
+
+    }
+
+    else if (percentage >= 40) {
+
+        grade = "D";
+
+    }
+
+    else {
+
+        grade = "F";
+    }
+
+
+
+    // Display Result
+
+    document.getElementById("result").style.display = "block";
+
+
+    document.getElementById("result").innerHTML =
+
+
+        '<div class="result-title">' +
+        '🎓 STUDENT RESULT' +
+        '</div>' +
+
+
+        '<div class="student-info">' +
+
+        "<b>👤 Student Name:</b> " +
+        studentName +
+        "<br>" +
+
+        "<b>🆔 Enrollment Number:</b> " +
+        enrollment +
+        "<br>" +
+
+        "<b>📘 Course:</b> " +
+        Course +
+
+        "</div>" +
+
+
+
+        '<div class="subject-result">' +
+        "<b>Subject 1</b>" +
+        "<span>" + m1 + " - " + s1 + "</span>" +
+        "</div>" +
+
+
+        '<div class="subject-result">' +
+        "<b>Subject 2</b>" +
+        "<span>" + m2 + " - " + s2 + "</span>" +
+        "</div>" +
+
+
+        '<div class="subject-result">' +
+        "<b>Subject 3</b>" +
+        "<span>" + m3 + " - " + s3 + "</span>" +
+        "</div>" +
+
+
+        '<div class="subject-result">' +
+        "<b>Subject 4</b>" +
+        "<span>" + m4 + " - " + s4 + "</span>" +
+        "</div>" +
+
+
+        '<div class="subject-result">' +
+        "<b>Subject 5</b>" +
+        "<span>" + m5 + " - " + s5 + "</span>" +
+        "</div>" +
+
+
+
+        '<div class="percentage">' +
+
+        "Total Marks: " +
+        total +
+        " / 500" +
+
+        "<br>" +
+
+        "Percentage: " +
+        percentage.toFixed(2) +
+        "%" +
+
+        "<br>" +
+
+        "Grade: " +
+        grade +
+
+        "</div>" +
+
+
+
+        '<div class="overall">' +
+
+        "<b>Overall Result:</b><br>" +
+
+        overallResult +
+
+        "</div>";
+
+}
+
+
+
+function clearResult() {
+
+
+    document.getElementById("studentName").value = "";
+
+    document.getElementById("enrollment").value = "";
+
+    document.getElementById("Course").value = "";
+
+
+    document.getElementById("sub1").value = "";
+
+    document.getElementById("sub2").value = "";
+
+    document.getElementById("sub3").value = "";
+
+    document.getElementById("sub4").value = "";
+
+    document.getElementById("sub5").value = "";
+
+
+    document.getElementById("result").innerHTML = "";
+
+    document.getElementById("result").style.display = "none";
+
+}
+
+
+</script>
+
 
 </body>
 </html>
